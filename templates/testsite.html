@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block testsitecontent %}
+
+
+<h1>Test site</h1>
+<p class="classstringhere"></p>
+<p class="classstringhere"></p>
+
+<p id="count"></p>
+
+
+<script>
+    
+    var length = document.getElementsByClassName("classstringhere").length
+    document.getElementById("count").innerHTML = length;
+
+
+</script>
+
+{% endblock testsitecontent %}
