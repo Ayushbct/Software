@@ -12,7 +12,7 @@ urlpatterns = [
 
 
     ##  This is for new site
-    # path("newapp",views.newapp,name='newapp'),
+    path("newapp",views.newapp,name='newapp'),
     path("",views.newapp,name='newapp'),
     path("viewtable",views.viewtable,name='viewtable'),
     path("deletenewapp/<newapp_id>",views.deletenewapp,name='deletenewapp'),
@@ -26,6 +26,11 @@ urlpatterns = [
     path("updateexam/<addexam_id>",views.updateexam,name='updateexam'),
     path("updatefunc/<addexam_id>",views.updatefunc,name='updatefunc'),
     path("deleteexam/<addexam_id>",views.deleteexam,name='deleteexam'),
+
+    path("addinvigilator/<newapp_id>/<addexam_id>",views.addinvigilator,name='addinvigilator'),
+    path("deleteinvigilator/<newapp_id>/<addexam_id>",views.deleteinvigilator,name='deleteinvigilator'),
+    
+    
     
     
 

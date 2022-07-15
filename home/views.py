@@ -8,7 +8,6 @@ from django.contrib import messages
 from home.models import Newapp
 from hello.filters import ViewtableFilter
 from home.models import Addexam
-
 # Create your views here.
 
 
@@ -88,7 +87,7 @@ def updatenewappfunc(request, newapp_id):
     newapp_data.newappaddress = request.POST.get('newappaddress')
     newapp_data.newappdepart = request.POST.get('newappdepart')
     newapp_data.save()
-    messages.success(request, 'Invisilator updated')
+    messages.success(request, 'Invigilator updated')
     return redirect('viewtable')
 
 
@@ -132,18 +131,29 @@ def viewexam(request):
     exam_data = {
         "addexam_data": addexam_data,
         
+        
     }
     return render(request, "viewexam.html", exam_data)
+
 
 
 def updateexam(request, addexam_id):
     addexam_data = Addexam.objects.get(pk=addexam_id)
     teachers=addexam_data.examnewapp.all()
+    removednewapp_data = Newapp.objects.exclude(pk__in=teachers)
     allexam_data = Addexam.objects.all()
+    allnewapp_data = Newapp.objects.all()
+    # filternewapp_data = Newapp.objects.all()
+    viewfilter = ViewtableFilter(request.GET, queryset=removednewapp_data)
+    removednewapp_data = viewfilter.qs
+
     data = {
         'allexam_data': allexam_data,
         'addexam_data': addexam_data,
         'teachers':teachers,
+        'allnewapp_data':allnewapp_data,
+        'removednewapp_data':removednewapp_data,
+        'viewfilter':viewfilter,
     }
 
     return render(request, "addexam.html", data)
@@ -170,3 +180,16 @@ def deleteexam(request, addexam_id):
     addexam_data.delete()
     messages.success(request, 'Exam deleted')
     return redirect('viewexam')
+
+def addinvigilator(request,newapp_id, addexam_id):
+    addexam_data = Addexam.objects.get(pk=addexam_id)
+    newapp_data=Newapp.objects.get(pk=newapp_id)
+    addexam_data.examnewapp.add(newapp_data)
+    
+    return redirect('updateexam',addexam_id)
+
+def deleteinvigilator(request,newapp_id, addexam_id):
+    addexam_data = Addexam.objects.get(pk=addexam_id)
+    newapp_data=Newapp.objects.get(pk=newapp_id)
+    addexam_data.examnewapp.remove(newapp_data)    
+    return redirect('updateexam',addexam_id)

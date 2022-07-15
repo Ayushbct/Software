@@ -40,8 +40,7 @@
         <option value="Even Semester">Even Semester</option>
       </select>
     </div>
-
-    <div id="regularbackselect">
+    <div class="mb-3" id="regularbackselect">
       <div class="form-check form-check-inline">
         <!--If you want to change value of this change in javascript as well-->
         <input class="form-check-input" required type="radio" name="regularback" id="examregular" value="Regular exam">
@@ -75,14 +74,46 @@
         rows="5">{{addexam_data.examdesc}}</textarea>
     </div>
 
-
     <button type="submit" class="btn btn-primary">Update</button>
   </form>
 </div>
+
 <div class="container">
-  {% for t in teachers %}
-  <p>{{t.newappname}}, {{t.newappemail}}, {{t.newappdepart}}</p>
-  {% endfor %}
+  <h3>Selected invigilator</h3>
+  <div>
+    {% for t in teachers %}
+    <p>
+      {{t.newappname}}, {{t.newappemail}}, {{t.newappdepart}}
+      <a href="{% url 'deleteinvigilator' t.id addexam_data.id%}"><button
+          class="btn btn-danger btn-sm">Delete</button></a>
+    </p>
+    {% endfor %}
+  </div>
+  <hr>
+
+  <h3>Remaining invigilator</h3>
+  <div>
+    <form method="get">
+      {{viewfilter.form}}
+      <button class="btn btn-primary mx-1 my-1" type="submit">Search</button>
+    </form>
+    {% for r in removednewapp_data %}
+    <p>{{r.newappname}}, {{r.newappemail}}, {{r.newappdepart}}
+      <a href="{% url 'addinvigilator' r.id addexam_data.id%}"><button class="btn btn-info btn-sm">Add</button></a>
+
+    </p>
+    {% endfor %}
+  </div>
+  <hr>
+
+  <h3>All invigilator</h3>
+  <div>
+    {% for a in allnewapp_data %}
+    <p>{{a.newappname}}, {{a.newappemail}}, {{a.newappdepart}}</p>
+    {% endfor %}
+  </div>
+
+  <hr>
 </div>
 {% else %}
 
@@ -178,7 +209,7 @@
 
     if (that.value == "Exam Entrance") {
       {% if addexam_data %}
-        document.getElementById('examsemtype').selectedIndex= '0';
+      document.getElementById('examsemtype').selectedIndex = '0';
       {% endif %}
       document.getElementById("oddevenselect").style.display = "none";
       document.getElementById("regularbackselect").style.display = "none";
