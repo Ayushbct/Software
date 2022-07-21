@@ -29,9 +29,21 @@ urlpatterns = [
 
     path("addinvigilator/<newapp_id>/<addexam_id>",views.addinvigilator,name='addinvigilator'),
     path("deleteinvigilator/<newapp_id>/<addexam_id>",views.deleteinvigilator,name='deleteinvigilator'),
-    
-    
-    
-    
 
+    path("addroom",views.addroom,name='addroom'),
+    path("deleteroom/<addroom_id>",views.deleteroom,name='deleteroom'),
+    path("updateroom/<addroom_id>",views.updateroom,name='updateroom'),
+    path("updateroomfunc/<addroom_id>",views.updateroomfunc,name='updateroomfunc'),
+
+
+    path("addinvigilatorinroom/<newapp_id>/<addroom_id>",views.addinvigilatorinroom,name='addinvigilatorinroom'),
+    path("deleteinvigilatorfromroom/<newapp_id>/<addroom_id>",views.deleteinvigilatorfromroom,name='deleteinvigilatorfromroom'),
+    
+    path("addbuilding",views.addbuilding,name='addbuilding'),
+    path("deletebuilding/<addbuilding_id>",views.deletebuilding,name='deletebuilding'),
+    path("updatebuilding/<addbuilding_id>",views.updatebuilding,name='updatebuilding'),
+    path("updatebuildingfunc/<addbuilding_id>",views.updatebuildingfunc,name='updatebuildingfunc'),
+
+    path("deleteroomfrombuilding/<addroom_id>/<addbuilding_id>",views.deleteroomfrombuilding,name='deleteroomfrombuilding'),
+    path("addroominbuilding/<addroom_id>/<addbuilding_id>",views.addroominbuilding,name='addroominbuilding'),
 ]

@@ -20,6 +20,7 @@ class Newapp(models.Model):
     newappphone=models.CharField(max_length=12)
     newappaddress=models.CharField(max_length=122)
     newappdepart=models.CharField(max_length=255)
+    newappposition=models.CharField(max_length=255)
     
     #newappdate=models.DateField()
     def __str__(self):
@@ -36,7 +37,26 @@ class Addexam(models.Model):
     examtime=models.CharField(max_length=122)
     newexamtime=models.TimeField(max_length=122,blank=True, null=True)
     examdesc=models.TextField()
-    #examnewapp=models.ForeignKey(Newapp,blank=True,null=True)#, on_delete=models.CASCADE)
+    #examnewapp=models.ForeignKey(Newapp,blank=True,null=True, on_delete=models.CASCADE)
     examnewapp=models.ManyToManyField(Newapp,blank=True)
     def __str__(self):
         return self.examname +" : "+ self.examcentre
+
+class Addroom(models.Model):
+    roomname=models.CharField(max_length=122)
+    invigilatorsinroom=models.ManyToManyField(Newapp,blank=True)
+    
+    def __str__(self):
+        return self.roomname
+
+class Addbuilding(models.Model):
+    buildingname=models.CharField(max_length=122)
+    rooms=models.ManyToManyField(Addroom,blank=True)
+    
+    def __str__(self):
+        return self.buildingname
+
+class Testing(models.Model):
+    name=models.CharField(max_length=122)
+    def __str__(self):
+        return self.name

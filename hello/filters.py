@@ -13,4 +13,4 @@ class ViewtableFilter(django_filters.FilterSet):
         model=Newapp
         
         fields='__all__'
-        exclude=['newappaddress',"newappdepart"]
+        exclude=['newappaddress',"newappdepart",'newappposition']
