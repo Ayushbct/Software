@@ -13,7 +13,8 @@ urlpatterns = [
 
     ##  This is for new site
     path("newapp",views.newapp,name='newapp'),
-    path("",views.newapp,name='newapp'),
+    #path("",views.newapp,name='newapp'),
+    path("",views.viewexam,name='viewexam'),
     path("viewtable",views.viewtable,name='viewtable'),
     path("deletenewapp/<newapp_id>",views.deletenewapp,name='deletenewapp'),
     path("updatenewapp/<newapp_id>",views.updatenewapp,name='updatenewapp'),
@@ -46,4 +47,14 @@ urlpatterns = [
 
     path("deleteroomfrombuilding/<addroom_id>/<addbuilding_id>",views.deleteroomfrombuilding,name='deleteroomfrombuilding'),
     path("addroominbuilding/<addroom_id>/<addbuilding_id>",views.addroominbuilding,name='addroominbuilding'),
+
+
+    path("deletebuildingfromexam/<addbuilding_id>/<addexam_id>",views.deletebuildingfromexam,name='deletebuildingfromexam'),
+    path("addbuildinginexam/<addbuilding_id>/<addexam_id>",views.addbuildinginexam,name='addbuildinginexam'),
+
+
+    path('signup',views.handleSignup,name='handleSignup'),
+    path('login',views.handleLogin,name='handleLogin'),
+    path('logout',views.handleLogout,name='handleLogout'),
+
 ]

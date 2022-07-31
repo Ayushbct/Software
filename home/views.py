@@ -9,6 +9,9 @@ from home.models import Newapp
 from hello.filters import ViewtableFilter
 from home.models import Addexam
 from home.models import *
+
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate,login,logout
 # Create your views here.
 
 
@@ -143,21 +146,26 @@ def viewexam(request):
 
 def updateexam(request, addexam_id):
     addexam_data = Addexam.objects.get(pk=addexam_id)
-    teachers=addexam_data.examnewapp.all()
-    removednewapp_data = Newapp.objects.exclude(pk__in=teachers)
+    
+
+    buildingsinexam=addexam_data.examaddbuilding.all()
+    removedbuildingsinexam_data = Addbuilding.objects.exclude(pk__in=buildingsinexam)
+    alladdbuilding_data = Addbuilding.objects.all()
+
     allexam_data = Addexam.objects.all()
-    allnewapp_data = Newapp.objects.all()
+    
     # filternewapp_data = Newapp.objects.all()
-    viewfilter = ViewtableFilter(request.GET, queryset=removednewapp_data)
-    removednewapp_data = viewfilter.qs
+    
 
     data = {
         'allexam_data': allexam_data,
         'addexam_data': addexam_data,
-        'teachers':teachers,
-        'allnewapp_data':allnewapp_data,
-        'removednewapp_data':removednewapp_data,
-        'viewfilter':viewfilter,
+        
+        
+        'buildingsinexam':buildingsinexam,
+        'removedbuildingsinexam_data':removedbuildingsinexam_data,
+        'alladdbuilding_data':alladdbuilding_data,
+
     }
 
     return render(request, "addexam.html", data)
@@ -197,8 +205,6 @@ def deleteinvigilator(request,newapp_id, addexam_id):
     newapp_data=Newapp.objects.get(pk=newapp_id)
     addexam_data.examnewapp.remove(newapp_data)    
     return redirect('updateexam',addexam_id)
-
-# def addroom(request):
     if request.method == "POST":
         roomname = request.POST.get('roomname')
         addroom = Addroom(roomname=roomname)
@@ -357,4 +363,68 @@ def addroominbuilding(request,addroom_id, addbuilding_id):
     addbuilding_data.rooms.add(addroom_data)
     return redirect('updatebuilding',addbuilding_id)
 
+def deletebuildingfromexam(request,addbuilding_id, addexam_id):
+
+    addbuilding_data=Addbuilding.objects.get(pk=addbuilding_id)
+    addexam_data = Addexam.objects.get(pk=addexam_id)
+    
+    addexam_data.examaddbuilding.remove(addbuilding_data)
+    return redirect('updateexam',addexam_id)
+
+
+def addbuildinginexam(request,addbuilding_id, addexam_id):
+    addbuilding_data=Addbuilding.objects.get(pk=addbuilding_id)
+    addexam_data = Addexam.objects.get(pk=addexam_id)
+    
+    addexam_data.examaddbuilding.add(addbuilding_data)
+    return redirect('updateexam',addexam_id)
+
+
+def handleSignup(request):
+    if request.method=="POST":
+        signupusername=request.POST['signupusername']
+        signuppassword1=request.POST['signuppassword1']
+        signuppassword2=request.POST['signuppassword2']
+
+        if not signupusername.isalnum():
+            
+
+            messages.error(request,"Username should only contain letter and number")
+            return redirect('/')
+
+        if signuppassword1!=signuppassword2:
+            messages.error(request,"Passwords do not match")
+            return redirect('/')
+        myuser=User.objects.create_user(signupusername,None,signuppassword1)
+        myuser.save()
+        messages.success(request,"Account successfully created")
+
+        return redirect('/')
+
+        
+    else:
+        return HttpResponse('404 - Not Found')
+
+def handleLogin(request):
+    if request.method=="POST":
+        loginusername=request.POST['loginusername']
+        loginpassword1=request.POST['loginpassword1']
+        
+        user=authenticate(username=loginusername,password=loginpassword1)
+
+        if user is not None:
+            login(request,user)
+            messages.success(request, 'Successfully logged in')
+            return redirect('/')
+        else:
+            messages.error(request, 'Unsuccessfull to log in, Please try again')
+            return redirect('/')
+    return HttpResponse('404 - Not Found')
+
+def handleLogout(request):
+    
+    logout(request)
+    messages.success(request, 'Successfully logged out')
+    return redirect('/')
+    
 

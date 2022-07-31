@@ -26,21 +26,6 @@ class Newapp(models.Model):
     def __str__(self):
         return self.newappname +" : "+ self.newappdepart
 
-class Addexam(models.Model):
-    examname=models.CharField(max_length=122)
-    examtype=models.CharField(max_length=122)
-    examsemtype=models.CharField(max_length=122,blank=True,null=True)
-    regularback=models.CharField(max_length=122,blank=True,null=True)
-    examcentre=models.CharField(max_length=122)
-    examdate=models.CharField(max_length=122)
-    newexamdate=models.DateField(max_length=122,blank=True, null=True)
-    examtime=models.CharField(max_length=122)
-    newexamtime=models.TimeField(max_length=122,blank=True, null=True)
-    examdesc=models.TextField()
-    #examnewapp=models.ForeignKey(Newapp,blank=True,null=True, on_delete=models.CASCADE)
-    examnewapp=models.ManyToManyField(Newapp,blank=True)
-    def __str__(self):
-        return self.examname +" : "+ self.examcentre
 
 class Addroom(models.Model):
     roomname=models.CharField(max_length=122)
@@ -55,6 +40,26 @@ class Addbuilding(models.Model):
     
     def __str__(self):
         return self.buildingname
+
+class Addexam(models.Model):
+    examname=models.CharField(max_length=122)
+    examtype=models.CharField(max_length=122)
+    examsemtype=models.CharField(max_length=122,blank=True,null=True)
+    regularback=models.CharField(max_length=122,blank=True,null=True)
+    examcentre=models.CharField(max_length=122)
+    examdate=models.CharField(max_length=122)
+    newexamdate=models.DateField(max_length=122,blank=True, null=True)
+    examtime=models.CharField(max_length=122)
+    newexamtime=models.TimeField(max_length=122,blank=True, null=True)
+    examdesc=models.TextField()
+    #examnewapp=models.ForeignKey(Newapp,blank=True,null=True, on_delete=models.CASCADE)
+    
+
+    #This is for buildings in exam
+    examaddbuilding=models.ManyToManyField(Addbuilding,blank=True)
+    def __str__(self):
+        return self.examname +" : "+ self.examcentre
+
 
 class Testing(models.Model):
     name=models.CharField(max_length=122)

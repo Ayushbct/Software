@@ -136,3 +136,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
+#This is added later for danger
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}

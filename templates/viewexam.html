@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}View exam{% endblock title %}
+{% block title %}Home{% endblock title %}
 {% block viewexamcontent %}
 <h1>View exam</h1>
 
@@ -17,7 +17,9 @@
                 <th scope="col">Exam centre</th>
                 <th scope="col">Exam date</th>
                 <th scope="col">Exam time</th>
+                {% if user.is_authenticated %}
                 <th scope="col">Others</th>
+                {% endif %}
                 
                 
             </tr>
@@ -42,10 +44,12 @@
                 {% comment %} {% for t in teachers %}
                     {{t.newappname}}
                 {% endfor %} {% endcomment %}
+                {% if user.is_authenticated %}
                 <td>
                     <a href="{% url 'updateexam' n.id %}" ><button class="btn btn-info btn-sm">Update</button></a>
                     <a href="{% url 'deleteexam' n.id %}" ><button class="btn btn-danger btn-sm">Delete</button></a>
                 </td>
+                {% endif %}
             </tr>
             {% endfor %}
         </tbody>

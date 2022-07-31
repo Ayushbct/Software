@@ -79,6 +79,43 @@
 </div>
 
 <div class="container">
+  <h3>Selected building</h3>
+  <div>
+    {% for bie in buildingsinexam %}
+    <p>
+      {{bie.buildingname}}
+      <a href="{% url 'deletebuildingfromexam' bie.id addexam_data.id%}"><button
+          class="btn btn-danger btn-sm">Delete</button></a>
+    </p>
+    {% endfor %}
+  </div>
+  <hr>
+
+  <h3>Remaining buildings</h3>
+  <div>
+    {% for rbied in removedbuildingsinexam_data %}
+    <p>{{rbied.buildingname}}
+      <a href="{% url 'addbuildinginexam' rbied.id addexam_data.id%}"><button class="btn btn-info btn-sm">Add</button></a>
+
+    </p>
+    {% endfor %}
+  </div>
+  <hr>
+
+  <h3>All buildings</h3>
+  <div>
+    {% for aabd in alladdbuilding_data %}
+    <p>{{aabd.buildingname}}</p>
+    {% endfor %}
+  </div>
+
+  <hr>
+</div>
+
+
+
+{% comment %} 
+<div class="container">
   <h3>Selected invigilator</h3>
   <div>
     {% for t in teachers %}
@@ -114,7 +151,8 @@
   </div>
 
   <hr>
-</div>
+</div> {% endcomment %}
+
 {% else %}
 
 <h1>Add exam</h1>
