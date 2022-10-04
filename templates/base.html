@@ -62,7 +62,10 @@
           </div>
           {% if user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link" href="/viewtable">View table</a>
+            <a class="nav-link" href="/newapp">Add invigilator</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/viewtable">View invigilator</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/addexam">Add exam</a>
@@ -77,9 +80,9 @@
             <a class="nav-link" href="/addbuilding">Add building</a>
           </li>
 
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" href="/testsite">Test site</a>
-          </li>
+          </li> -->
           {% else %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="madeby" role="button" data-bs-toggle="dropdown"

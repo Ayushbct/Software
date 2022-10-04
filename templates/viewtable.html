@@ -46,7 +46,7 @@
                 <td>{{n.newappaddress}}</td>
                 <td>{{n.newappdepart}}</td>
                 <td>
-                    <button class="btn btn-primary btn-sm" >Add me</button>
+                    {% comment %} <button class="btn btn-primary btn-sm" >Add me</button> {% endcomment %}
                     <a href="{% url 'updatenewapp' n.id %}" ><button class="btn btn-info btn-sm">Update</button></a>
                     <a href="{% url 'deletenewapp' n.id %}" ><button class="btn btn-danger btn-sm">Delete</button></a>
                     
